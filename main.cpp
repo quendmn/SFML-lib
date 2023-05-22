@@ -4,15 +4,20 @@ using namespace sf;
 
 int main()
 {
+    //создание окна
+    RenderWindow window(VideoMode(1440, 1024), "Alias"); // для русского названия L""
 
-    RenderWindow window(VideoMode(400, 400), "Alias", Style::Default);
-
-    window.setVerticalSyncEnabled(true);
-
-    CircleShape shape(100.f, 3);
-    shape.setPosition(100, 100);
-    shape.setFillColor(Color::Magenta);
-
+    // создание иконки
+    Image icon;
+    
+    if (!icon.loadFromFile("images/icon.png")) return 1;  
+    window.setIcon(32, 32, icon.getPixelsPtr());
+    //создание фона
+    Texture background;
+    background.loadFromFile("images/background.png");  // создали текстуру, которую нужно применять к фигуре
+    RectangleShape Backgound(Vector2f(1440, 1024));
+    Backgound.setTexture(&background);
+    Backgound.setPosition(Vector2f(0, 0));
     while (window.isOpen())
     {
         Event event;
@@ -22,9 +27,10 @@ int main()
                 window.close();
         }
 
-        window.clear(Color::Blue);
-        window.draw(shape);
-        window.display();
+        
+        window.clear(); //очищает
+        window.draw(Backgound);
+        window.display(); //выводит все объекты отрисовки
     }
     return 0;
 }
